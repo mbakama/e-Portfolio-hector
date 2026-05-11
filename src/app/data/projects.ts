@@ -86,7 +86,7 @@ export const projectsByLang: Record<Lang, FeaturedProject[]> = {
         'Exonérations fiscales',
         'Analyse de déclarations',
         'Contrôle fiscal',
-        'Mises en demeure de payer (MEP)',
+        'Mises en demeure de payer',
         'Fiches de prise en charge',
         'Taxation d\'office',
       ],
