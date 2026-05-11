@@ -1,0 +1,35 @@
+<section id="contact" class="mb-14 rounded-2xl border border-white/10 bg-slate-950/70 p-6">
+  <h2 class="mb-5 text-2xl font-semibold text-white md:text-3xl">{{ text().contactTitle }}</h2>
+  <form class="grid gap-4 md:grid-cols-2">
+    <input
+      type="text"
+      [placeholder]="text().contactName"
+      class="rounded-xl border border-white/15 bg-slate-900/70 px-4 py-3 text-sm outline-none ring-0 transition placeholder:text-slate-500 focus:border-blue-400/40"
+    />
+    <input
+      type="email"
+      [placeholder]="text().contactEmail"
+      class="rounded-xl border border-white/15 bg-slate-900/70 px-4 py-3 text-sm outline-none ring-0 transition placeholder:text-slate-500 focus:border-blue-400/40"
+    />
+    <textarea
+      rows="4"
+      [placeholder]="text().contactMessage"
+      class="md:col-span-2 rounded-xl border border-white/15 bg-slate-900/70 px-4 py-3 text-sm outline-none transition placeholder:text-slate-500 focus:border-blue-400/40"
+    ></textarea>
+    <button
+      type="button"
+      class="md:col-span-2 rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 px-4 py-3 text-sm font-semibold text-white transition hover:brightness-110"
+    >
+      {{ text().sendMessage }}
+    </button>
+  </form>
+  <div class="mt-6 flex flex-wrap gap-5 text-sm text-slate-300">
+    <a href="mailto:hector@example.com" class="transition hover:text-white">Email</a>
+    <a href="https://www.linkedin.com" target="_blank" rel="noopener" class="transition hover:text-white"
+      >LinkedIn</a
+    >
+    <a href="https://github.com" target="_blank" rel="noopener" class="transition hover:text-white"
+      >GitHub</a
+    >
+  </div>
+</section>

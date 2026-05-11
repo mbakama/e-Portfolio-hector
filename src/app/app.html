@@ -1,0 +1,24 @@
+<div class="mx-auto max-w-7xl px-6 pb-16 pt-6 text-slate-100 lg:px-10">
+  <app-header
+    [text]="text"
+    [currentLang]="currentLang"
+    [navLinks]="navLinks"
+    (langChange)="setLanguage($event)"
+  />
+
+  <app-hero [text]="text" />
+
+  <app-skills [text]="text" [techGroups]="techGroups" />
+
+  <app-projects [text]="text" [projects]="projects" />
+
+  <app-experience [text]="text" [experiences]="experiences" />
+
+  <app-open-source [text]="text" [repos]="openSourceRepos" />
+
+  <app-contact [text]="text" />
+
+  <footer class="border-t border-white/10 pt-6 text-center text-sm text-slate-400">
+    {{ text.footer }}
+  </footer>
+</div>

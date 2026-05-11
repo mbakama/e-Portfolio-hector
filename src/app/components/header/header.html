@@ -1,0 +1,51 @@
+<header
+  class="sticky top-4 z-40 mb-14 rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3 shadow-2xl shadow-blue-900/10 backdrop-blur-xl"
+>
+  <nav class="flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="h-10 w-10 rounded-lg bg-gradient-to-br from-blue-500/90 to-violet-500/80"></div>
+      <div>
+        <p class="text-xs uppercase tracking-[0.18em] text-slate-400">Portfolio</p>
+        <p class="text-sm font-semibold text-slate-100">{{ text().profileTitle }}</p>
+      </div>
+    </div>
+    <ul class="hidden items-center gap-5 text-sm text-slate-300 md:flex">
+      @for (link of navLinks(); track link.key) {
+        <li>
+          <a class="transition hover:text-white" [href]="'#' + link.key">{{ link.label }}</a>
+        </li>
+      }
+    </ul>
+    <div class="flex items-center gap-2">
+      <button
+        type="button"
+        (click)="setLanguage('fr')"
+        class="rounded-md border px-2 py-1 text-xs transition"
+        [class.border-blue-400]="currentLang() === 'fr'"
+        [class.bg-blue-500/20]="currentLang() === 'fr'"
+        [class.text-blue-200]="currentLang() === 'fr'"
+        [class.border-white/20]="currentLang() !== 'fr'"
+        [class.text-slate-300]="currentLang() !== 'fr'"
+      >
+        FR
+      </button>
+      <button
+        type="button"
+        (click)="setLanguage('en')"
+        class="rounded-md border px-2 py-1 text-xs transition"
+        [class.border-blue-400]="currentLang() === 'en'"
+        [class.bg-blue-500/20]="currentLang() === 'en'"
+        [class.text-blue-200]="currentLang() === 'en'"
+        [class.border-white/20]="currentLang() !== 'en'"
+        [class.text-slate-300]="currentLang() !== 'en'"
+      >
+        EN
+      </button>
+      <a
+        class="rounded-lg border border-blue-400/30 bg-blue-500/20 px-4 py-2 text-sm font-medium text-blue-200 transition hover:bg-blue-500/30"
+        href="#"
+        >{{ text().resume }}</a
+      >
+    </div>
+  </nav>
+</header>

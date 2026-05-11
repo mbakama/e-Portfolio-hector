@@ -1,0 +1,365 @@
+<section id="projects" class="mb-20">
+  <!-- Professional Projects -->
+  <div class="mb-16">
+    <h2 class="mb-2 text-2xl font-semibold text-white md:text-3xl">
+      {{ text().professionalProjectsTitle }}
+    </h2>
+    <p class="mb-8 max-w-3xl text-slate-400">{{ text().professionalProjectsSubtitle }}</p>
+    <div class="space-y-6">
+      @for (project of professionalProjects(); track project.title; let i = $index) {
+        <article
+          class="rounded-2xl border border-white/10 bg-slate-950/70 shadow-lg shadow-black/20 backdrop-blur-sm"
+        >
+          <!-- Main project info -->
+          <div class="p-6">
+            <!-- ERP badge + title -->
+            <div class="mb-3 flex flex-wrap items-center gap-2">
+              <span
+                class="inline-flex items-center gap-1.5 rounded-full border border-blue-400/30 bg-blue-500/15 px-3 py-1 text-xs font-medium text-blue-200"
+              >
+                <svg
+                  class="h-3.5 w-3.5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4.5 2A1.5 1.5 0 0 0 3 3.5v13A1.5 1.5 0 0 0 4.5 18h11a1.5 1.5 0 0 0 1.5-1.5V7.621a1.5 1.5 0 0 0-.44-1.06l-4.12-4.122A1.5 1.5 0 0 0 11.378 2H4.5Zm2.25 8.5a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Zm0 3a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                {{ project.subtitle }}
+              </span>
+              <span
+                class="rounded-md border border-violet-400/20 bg-violet-500/10 px-2.5 py-1 text-xs text-violet-200"
+              >
+                {{ project.role }}
+              </span>
+            </div>
+
+            <h3 class="text-xl font-semibold text-slate-100">{{ project.title }}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-300">{{ project.description }}</p>
+
+            <!-- Technologies -->
+            <div class="mt-4 flex flex-wrap gap-2">
+              @for (tech of project.technologies; track tech) {
+                <span
+                  class="rounded-md border border-slate-400/20 bg-slate-500/10 px-2.5 py-1 text-xs text-slate-200"
+                  >{{ tech }}</span
+                >
+              }
+            </div>
+
+            <!-- Modules worked on -->
+            <div class="mt-5">
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
+                {{ text().modulesLabel }}
+              </p>
+              <div class="flex flex-wrap gap-2">
+                @for (module of project.modules; track module) {
+                  <span class="rounded-md bg-slate-800/60 px-2.5 py-1 text-xs text-slate-300">{{
+                    module
+                  }}</span>
+                }
+              </div>
+            </div>
+
+            <!-- Metrics + Actions -->
+            <div class="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div class="rounded-xl border border-white/10 bg-slate-900/70 px-4 py-3">
+                <p class="text-xs uppercase tracking-[0.14em] text-slate-400">
+                  {{ text().result }}
+                </p>
+                <p class="mt-1 text-sm font-semibold text-blue-200">{{ project.metrics }}</p>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                @if (project.demoUrl) {
+                  <a
+                    [href]="project.demoUrl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-center text-sm text-slate-200 transition hover:bg-white/10"
+                    >{{ text().liveDemo }}</a
+                  >
+                } @else {
+                  <span
+                    class="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-center text-sm text-slate-500 cursor-not-allowed"
+                    title="Lien disponible prochainement"
+                    >{{ text().liveDemo }}</span
+                  >
+                }
+                <a
+                  href="#"
+                  class="rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-center text-sm text-slate-200 transition hover:bg-white/10"
+                  >{{ text().github }}</a
+                >
+                <button
+                  type="button"
+                  (click)="toggleDetails(i)"
+                  class="flex items-center justify-center gap-2 rounded-lg border border-blue-400/25 bg-blue-500/15 px-3 py-2 text-sm text-blue-100 transition hover:bg-blue-500/25"
+                >
+                  {{ text().architecture }}
+                  <svg
+                    class="h-3.5 w-3.5 transition-transform duration-300"
+                    [class.rotate-180]="isExpanded(i)"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Expandable details panel -->
+          @if (isExpanded(i)) {
+            <div class="border-t border-white/10 px-6 pb-6 pt-5">
+              <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                <div class="rounded-xl border border-white/10 bg-slate-900/60 p-4">
+                  <h4 class="text-xs font-semibold uppercase tracking-[0.14em] text-blue-300">
+                    {{ text().detailsProblem }}
+                  </h4>
+                  <p class="mt-2 text-sm leading-relaxed text-slate-400">
+                    {{ project.details.problem }}
+                  </p>
+                </div>
+                <div class="rounded-xl border border-white/10 bg-slate-900/60 p-4">
+                  <h4 class="text-xs font-semibold uppercase tracking-[0.14em] text-blue-300">
+                    {{ text().detailsSolution }}
+                  </h4>
+                  <p class="mt-2 text-sm leading-relaxed text-slate-400">
+                    {{ project.details.solution }}
+                  </p>
+                </div>
+                <div class="rounded-xl border border-white/10 bg-slate-900/60 p-4">
+                  <h4 class="text-xs font-semibold uppercase tracking-[0.14em] text-blue-300">
+                    {{ text().detailsArchitecture }}
+                  </h4>
+                  <p class="mt-2 text-sm leading-relaxed text-slate-400">
+                    {{ project.details.architecture }}
+                  </p>
+                </div>
+                <div class="rounded-xl border border-white/10 bg-slate-900/60 p-4">
+                  <h4 class="text-xs font-semibold uppercase tracking-[0.14em] text-blue-300">
+                    {{ text().detailsFormLogic }}
+                  </h4>
+                  <p class="mt-2 text-sm leading-relaxed text-slate-400">
+                    {{ project.details.formLogic }}
+                  </p>
+                </div>
+                <div class="rounded-xl border border-white/10 bg-slate-900/60 p-4">
+                  <h4 class="text-xs font-semibold uppercase tracking-[0.14em] text-blue-300">
+                    {{ text().detailsApiStructure }}
+                  </h4>
+                  <p class="mt-2 text-sm leading-relaxed text-slate-400">
+                    {{ project.details.apiStructure }}
+                  </p>
+                </div>
+                <div class="rounded-xl border border-white/10 bg-slate-900/60 p-4">
+                  <h4 class="text-xs font-semibold uppercase tracking-[0.14em] text-blue-300">
+                    {{ text().detailsSqlOptimization }}
+                  </h4>
+                  <p class="mt-2 text-sm leading-relaxed text-slate-400">
+                    {{ project.details.sqlOptimization }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          }
+        </article>
+      }
+    </div>
+  </div>
+
+  <!-- Personal Projects -->
+  @if (personalProjects().length > 0) {
+    <div>
+      <h2 class="mb-2 text-2xl font-semibold text-white md:text-3xl">
+        {{ text().personalProjectsTitle }}
+      </h2>
+      <p class="mb-8 max-w-3xl text-slate-400">{{ text().personalProjectsSubtitle }}</p>
+      <div class="space-y-6">
+        @for (
+          project of personalProjects();
+          track project.title;
+          let i = $index
+        ) {
+          <article
+            class="rounded-2xl border border-white/10 bg-slate-950/70 shadow-lg shadow-black/20 backdrop-blur-sm"
+          >
+            <!-- Main project info -->
+            <div class="p-6">
+              <!-- Personal badge + title -->
+              <div class="mb-3 flex flex-wrap items-center gap-2">
+                <span
+                  class="inline-flex items-center gap-1.5 rounded-full border border-violet-400/30 bg-violet-500/15 px-3 py-1 text-xs font-medium text-violet-200"
+                >
+                  <svg
+                    class="h-3.5 w-3.5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M10 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM6 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM1.49 15.326a.78.78 0 0 1-.358-.442 3 3 0 0 1 4.308-3.516 6.484 6.484 0 0 0-1.905 3.959c-.023.222-.014.442.025.654a4.97 4.97 0 0 1-2.07-.655ZM16.44 15.98a4.97 4.97 0 0 0 2.07-.654.78.78 0 0 0 .357-.442 3 3 0 0 0-4.308-3.517 6.484 6.484 0 0 1 1.907 3.96 2.32 2.32 0 0 1-.026.654ZM18 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM5.304 16.19a.844.844 0 0 1-.277-.71 5 5 0 0 1 9.947 0 .843.843 0 0 1-.277.71A6.975 6.975 0 0 1 10 18a6.974 6.974 0 0 1-4.696-1.81Z"
+                    />
+                  </svg>
+                  {{ project.subtitle }}
+                </span>
+                <span
+                  class="rounded-md border border-violet-400/20 bg-violet-500/10 px-2.5 py-1 text-xs text-violet-200"
+                >
+                  {{ project.role }}
+                </span>
+              </div>
+
+              <h3 class="text-xl font-semibold text-slate-100">{{ project.title }}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-slate-300">{{ project.description }}</p>
+
+              <!-- Technologies -->
+              <div class="mt-4 flex flex-wrap gap-2">
+                @for (tech of project.technologies; track tech) {
+                  <span
+                    class="rounded-md border border-slate-400/20 bg-slate-500/10 px-2.5 py-1 text-xs text-slate-200"
+                    >{{ tech }}</span
+                  >
+                }
+              </div>
+
+              <!-- Modules worked on -->
+              <div class="mt-5">
+                <p class="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
+                  {{ text().modulesLabel }}
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  @for (module of project.modules; track module) {
+                    <span class="rounded-md bg-slate-800/60 px-2.5 py-1 text-xs text-slate-300">{{
+                      module
+                    }}</span>
+                  }
+                </div>
+              </div>
+
+              <!-- Metrics + Actions -->
+              <div class="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div class="rounded-xl border border-white/10 bg-slate-900/70 px-4 py-3">
+                  <p class="text-xs uppercase tracking-[0.14em] text-slate-400">
+                    {{ text().result }}
+                  </p>
+                  <p class="mt-1 text-sm font-semibold text-blue-200">{{ project.metrics }}</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  @if (project.demoUrl) {
+                    <a
+                      [href]="project.demoUrl"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-center text-sm text-slate-200 transition hover:bg-white/10"
+                      >{{ text().liveDemo }}</a
+                    >
+                  } @else {
+                    <span
+                      class="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-center text-sm text-slate-500 cursor-not-allowed"
+                      title="Lien disponible prochainement"
+                      >{{ text().liveDemo }}</span
+                    >
+                  }
+                  <a
+                    href="#"
+                    class="rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-center text-sm text-slate-200 transition hover:bg-white/10"
+                    >{{ text().github }}</a
+                  >
+                  <button
+                    type="button"
+                    (click)="toggleDetails(personalOffset() + i)"
+                    class="flex items-center justify-center gap-2 rounded-lg border border-blue-400/25 bg-blue-500/15 px-3 py-2 text-sm text-blue-100 transition hover:bg-blue-500/25"
+                  >
+                    {{ text().architecture }}
+                    <svg
+                      class="h-3.5 w-3.5 transition-transform duration-300"
+                      [class.rotate-180]="isExpanded(personalOffset() + i)"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Expandable details panel -->
+            @if (isExpanded(personalOffset() + i)) {
+              <div class="border-t border-white/10 px-6 pb-6 pt-5">
+                <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                  <div class="rounded-xl border border-white/10 bg-slate-900/60 p-4">
+                    <h4 class="text-xs font-semibold uppercase tracking-[0.14em] text-blue-300">
+                      {{ text().detailsProblem }}
+                    </h4>
+                    <p class="mt-2 text-sm leading-relaxed text-slate-400">
+                      {{ project.details.problem }}
+                    </p>
+                  </div>
+                  <div class="rounded-xl border border-white/10 bg-slate-900/60 p-4">
+                    <h4 class="text-xs font-semibold uppercase tracking-[0.14em] text-blue-300">
+                      {{ text().detailsSolution }}
+                    </h4>
+                    <p class="mt-2 text-sm leading-relaxed text-slate-400">
+                      {{ project.details.solution }}
+                    </p>
+                  </div>
+                  <div class="rounded-xl border border-white/10 bg-slate-900/60 p-4">
+                    <h4 class="text-xs font-semibold uppercase tracking-[0.14em] text-blue-300">
+                      {{ text().detailsArchitecture }}
+                    </h4>
+                    <p class="mt-2 text-sm leading-relaxed text-slate-400">
+                      {{ project.details.architecture }}
+                    </p>
+                  </div>
+                  <div class="rounded-xl border border-white/10 bg-slate-900/60 p-4">
+                    <h4 class="text-xs font-semibold uppercase tracking-[0.14em] text-blue-300">
+                      {{ text().detailsFormLogic }}
+                    </h4>
+                    <p class="mt-2 text-sm leading-relaxed text-slate-400">
+                      {{ project.details.formLogic }}
+                    </p>
+                  </div>
+                  <div class="rounded-xl border border-white/10 bg-slate-900/60 p-4">
+                    <h4 class="text-xs font-semibold uppercase tracking-[0.14em] text-blue-300">
+                      {{ text().detailsApiStructure }}
+                    </h4>
+                    <p class="mt-2 text-sm leading-relaxed text-slate-400">
+                      {{ project.details.apiStructure }}
+                    </p>
+                  </div>
+                  <div class="rounded-xl border border-white/10 bg-slate-900/60 p-4">
+                    <h4 class="text-xs font-semibold uppercase tracking-[0.14em] text-blue-300">
+                      {{ text().detailsSqlOptimization }}
+                    </h4>
+                    <p class="mt-2 text-sm leading-relaxed text-slate-400">
+                      {{ project.details.sqlOptimization }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            }
+          </article>
+        }
+      </div>
+    </div>
+  }
+</section>
